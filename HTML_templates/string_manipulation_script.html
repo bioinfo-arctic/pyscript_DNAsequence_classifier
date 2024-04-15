@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PyScript File Manipulation Example</title>
+    <!-- Include the PyScript CSS -->
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <!-- Include the PyScript JavaScript -->
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+</head>
+<body>
+    <input type="file" id="fileInput">
+    <pre id="fileContent"></pre> <!-- Element to display the file content -->
+	<pre id="manipulatedContent"></pre> <!-- Element to display the manipulated content -->
+
+    <py-script>
+        def manipulate_text(content):
+            # Split the string by "_"
+            parts = content.split("_")
+            # Join the parts with a newline to display them separately
+            result = "\n".join(parts)
+            # Find the element to display the manipulated content
+            manipulated_content_element = Element('manipulatedContent')
+            # Set the text content to the result
+            manipulated_content_element.write(result)
+    </py-script>
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // e.target.result contains the file's content
+                    const content = e.target.result;
+                    // Display the file content on the screen
+                    document.getElementById('fileContent').textContent = content;
+                };
+                reader.readAsText(file); // Read the file as text
+            }
+        });
+    </script>
+</body>
+</html>
